@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="adsBackground">#FFFFFF</color>
+    <color name="adsBackgroundButton">#2196F3</color>
+    <color name="viewNativeAdPreloadBackgroundColor">#CED4DA</color>
+    <color name="viewNativeAdPreloadTextColor">#212529</color>
+    <color name="viewNativeAdMaskColor">#B1B2B4</color>
+    <color name="viewNativeAdShimmerColor">#80FFFFFF</color>
+</resources>

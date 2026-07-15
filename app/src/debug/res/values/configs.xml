@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Base Android Composite Builds</string>
+
+    <!-- Ads -->
+    <string name="ads_app_id" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
+
+    <string name="ads_open_ads_id" translatable="false">ca-app-pub-3940256099942544/9257395921</string>
+    <string name="ads_native_id" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="ads_native_language_id" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="ads_native_intro_id" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="ads_interstitial_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="ads_interstitial_backward_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="ads_banner_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ads_banner_intro_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ads_banner_exit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ads_rewarded_id" translatable="false">ca-app-pub-3940256099942544/5224354917</string>
+
+    <!-- In app -->
+    <string name="billing_sub_week" translatable="false">com.ledkeyboard.weekly</string>
+    <string name="billing_sub_month" translatable="false">monthly</string>
+    <string name="billing_sub_year" translatable="false">com.led.yearlytest</string>
+    <string name="billing_inapp_onetime" translatable="false">test1</string>
+
+    <string name="privacy_policy_url" translatable="false">https://en.wikipedia.org/wiki/Wiki</string>
+    <string name="term_of_use_url" translatable="false">https://en.wikipedia.org/wiki/Wiki</string>
+    <string name="tracking_domain_url" translatable="false">https://appletracking.ducpvt.org/api/</string>
+    <string name="app_service_url" translatable="false">https://app-service.ducpvt.org/api/v1/</string>
+
+    <!-- appsflyer -->
+    <string name="app_flyer_id" translatable="false">not-use</string>
+</resources>
