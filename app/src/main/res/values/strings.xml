@@ -19,7 +19,7 @@
     <string name="life_time">Lifetime</string>
     <string name="continue_str">Continue</string>
     <string name="free_trial_name">%1$s-Days Free Trial</string>
-    <string name="free_trial_desc">then %s/%s, cancel anytime</string>
+    <string name="free_trial_desc">then %1$s/%2$s, cancel anytime</string>
     <string name="most_popular">BEST CHOICE</string>
     <string name="onetime">Onetime</string>
     <string name="week">week</string>
