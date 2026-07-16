@@ -24,7 +24,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "A-New-Coin-Identifier" // Đặt tên cho project theo mã dự án + tên app
+rootProject.name = "LeafSnap" // Đặt tên cho project theo mã dự án + tên app
 
 include(":app")
 include(":common")
