@@ -24,6 +24,7 @@
             android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,6 +37,7 @@
             android:name=".ui.main.MainActivity"
             android:exported="false"
             android:screenOrientation="portrait"
+            android:theme="@style/MainTheme"
             tools:ignore="LockedOrientationActivity" />
 
         <service

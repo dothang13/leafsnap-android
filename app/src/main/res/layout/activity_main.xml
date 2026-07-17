@@ -1605,6 +1605,1528 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <!-- Diagnose Screen Container -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutDiagnoseContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:paddingBottom="24dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <!-- STATE 1: Diagnose Main Content (initially VISIBLE) -->
+                <LinearLayout
+                    android:id="@+id/layoutDiagnoseMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <!-- Top Bar Title & Help Icon -->
+                    <RelativeLayout
+                        android:id="@+id/layoutDiagnoseHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:paddingStart="24dp"
+                        android:paddingEnd="24dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:text="Diagnose"
+                            android:textColor="#222222"
+                            android:textSize="28sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/montserrat_bold" />
+
+                        <ImageView
+                            android:id="@+id/btnHelpMain"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_help_outline_green"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?android:attr/selectableItemBackgroundBorderless" />
+                    </RelativeLayout>
+
+                    <!-- Main White Card with centered plant image inside it -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardDiagnoseInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginTop="24dp"
+                        app:cardCornerRadius="24dp"
+                        app:cardElevation="2dp"
+                        app:cardUseCompatPadding="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <!-- Plant Image inside the card -->
+                            <ImageView
+                                android:id="@+id/ivDiagnosePlant"
+                                android:layout_width="160dp"
+                                android:layout_height="160dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginBottom="16dp"
+                                android:src="@drawable/bg_diagnose"
+                                android:scaleType="fitCenter" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="24dp"
+                                android:layout_marginEnd="24dp"
+                                android:layout_marginBottom="16dp"
+                                android:gravity="center"
+                                android:text="Take photos, diagnose diseases, and learn how to treat them."
+                                android:textColor="#555555"
+                                android:textSize="15sp"
+                                android:fontFamily="@font/montserrat_semibold" />
+
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/btnAutoDiagnose"
+                                android:layout_width="match_parent"
+                                android:layout_height="54dp"
+                                android:layout_marginStart="24dp"
+                                android:layout_marginEnd="24dp"
+                                android:layout_marginBottom="24dp"
+                                android:background="@drawable/bg_green_gradient_pill"
+                                android:text="Auto Diagnose"
+                                android:textColor="@android:color/white"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/montserrat_bold"
+                                android:textAllCaps="false" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Section: Common plant diseases Header -->
+                    <LinearLayout
+                        android:id="@+id/btnViewAllDiseases"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="16dp"
+                        android:paddingStart="24dp"
+                        android:paddingEnd="24dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?android:attr/selectableItemBackground">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginEnd="8dp"
+                            android:src="@drawable/ic_chat_bubble_green" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Common plant diseases"
+                            android:textColor="#222222"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/montserrat_bold" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_arrow_right_circle_v2"
+                            app:tint="#8E8E93" />
+                    </LinearLayout>
+
+                    <!-- Main overview: ONLY shows 5 sample diseases -->
+                    <LinearLayout
+                        android:id="@+id/layoutDiseasesList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Item: Abiotic -->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true"
+                            app:cardBackgroundColor="@android:color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="100dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10dp"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/disease_abiotic" />
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Abiotic"
+                                        android:textColor="#222222"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/montserrat_bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="Physiological disorder is the abnormal growth pattern or abnormal external or internal c..."
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:fontFamily="@font/montserrat_regular"
+                                        android:maxLines="3"
+                                        android:ellipsize="end" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Item: Water-related issue -->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true"
+                            app:cardBackgroundColor="@android:color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="100dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10dp"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/disease_water_related" />
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Water-related issue"
+                                        android:textColor="#222222"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/montserrat_bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="Water is responsible for cell structural support in many plants, creating a constant pre..."
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:fontFamily="@font/montserrat_regular"
+                                        android:maxLines="3"
+                                        android:ellipsize="end" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Item: Nutrient-related issue -->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true"
+                            app:cardBackgroundColor="@android:color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="100dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10dp"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/disease_nutrient_related" />
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Nutrient-related issue"
+                                        android:textColor="#222222"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/montserrat_bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="Plant nutrition is a term that takes into account the interrelationships of mineral el..."
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:fontFamily="@font/montserrat_regular"
+                                        android:maxLines="3"
+                                        android:ellipsize="end" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Item: Water excess or uneven watering -->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true"
+                            app:cardBackgroundColor="@android:color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="100dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10dp"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/disease_water_excess" />
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Water excess or uneven watering"
+                                        android:textColor="#222222"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/montserrat_bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="Water excess and/or uneven watering are abiotic disorders caused by inadequate waterin..."
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:fontFamily="@font/montserrat_regular"
+                                        android:maxLines="3"
+                                        android:ellipsize="end" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Item: Nutrient deficiency -->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true"
+                            app:cardBackgroundColor="@android:color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="100dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10dp"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/disease_nutrient_deficiency" />
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Nutrient deficiency"
+                                        android:textColor="#222222"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/montserrat_bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="The nutrients most commonly deficient in plants are phosphorus, nitrogen, and iron..."
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:fontFamily="@font/montserrat_regular"
+                                        android:maxLines="3"
+                                        android:ellipsize="end" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- STATE 2: Diagnose Search Content (initially GONE) - ALL 15 diseases -->
+                <LinearLayout
+                    android:id="@+id/layoutDiagnoseSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <!-- Green header -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:background="@drawable/bg_green_gradient_header">
+
+                        <ImageView
+                            android:id="@+id/btnBackFromSearch"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="16dp"
+                            android:src="@drawable/ic_back_green"
+                            app:tint="@android:color/white"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="?android:attr/selectableItemBackgroundBorderless" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/btnBackFromSearch"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="12dp"
+                            android:text="Common plant diseases"
+                            android:textColor="@android:color/white"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/montserrat_bold" />
+                    </RelativeLayout>
+
+                    <!-- Search Input Card -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="16dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="2dp"
+                        app:cardBackgroundColor="@android:color/white">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:id="@+id/etSearchDiseases"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@android:color/transparent"
+                                android:hint="Search"
+                                android:textColorHint="#999999"
+                                android:textColor="#222222"
+                                android:textSize="15sp"
+                                android:paddingStart="16dp"
+                                android:paddingEnd="8dp"
+                                android:fontFamily="@font/montserrat_regular"
+                                android:singleLine="true" />
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginEnd="16dp"
+                                android:src="@drawable/ic_search_v2"
+                                app:tint="#8E8E93" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Filterable List of ALL 15 items -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Item: Abiotic -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardSearchAbiotic"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true"
+                            app:cardBackgroundColor="@android:color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="100dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10dp"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/disease_abiotic" />
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Abiotic"
+                                        android:textColor="#222222"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/montserrat_bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="Physiological disorder is the abnormal growth pattern or abnormal external or internal c..."
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:fontFamily="@font/montserrat_regular"
+                                        android:maxLines="3"
+                                        android:ellipsize="end" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Item: Water-related issue -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardSearchWaterRelated"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true"
+                            app:cardBackgroundColor="@android:color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="100dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10dp"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/disease_water_related" />
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Water-related issue"
+                                        android:textColor="#222222"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/montserrat_bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="Water is responsible for cell structural support in many plants, creating a constant pre..."
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:fontFamily="@font/montserrat_regular"
+                                        android:maxLines="3"
+                                        android:ellipsize="end" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Item: Nutrient-related issue -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardSearchNutrientRelated"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true"
+                            app:cardBackgroundColor="@android:color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="100dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10dp"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/disease_nutrient_related" />
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Nutrient-related issue"
+                                        android:textColor="#222222"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/montserrat_bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="Plant nutrition is a term that takes into account the interrelationships of mineral el..."
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:fontFamily="@font/montserrat_regular"
+                                        android:maxLines="3"
+                                        android:ellipsize="end" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Item: Water excess or uneven watering -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardSearchWaterExcess"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true"
+                            app:cardBackgroundColor="@android:color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="100dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10dp"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/disease_water_excess" />
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Water excess or uneven watering"
+                                        android:textColor="#222222"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/montserrat_bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="Water excess and/or uneven watering are abiotic disorders caused by inadequate waterin..."
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:fontFamily="@font/montserrat_regular"
+                                        android:maxLines="3"
+                                        android:ellipsize="end" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Item: Nutrient deficiency -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardSearchNutrientDeficiency"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true"
+                            app:cardBackgroundColor="@android:color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="100dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10dp"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/disease_nutrient_deficiency" />
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Nutrient deficiency"
+                                        android:textColor="#222222"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/montserrat_bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="The nutrients most commonly deficient in plants are phosphorus, nitrogen, and iron..."
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:fontFamily="@font/montserrat_regular"
+                                        android:maxLines="3"
+                                        android:ellipsize="end" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Item: Water deficiency -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardSearchWaterDeficiency"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true"
+                            app:cardBackgroundColor="@android:color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="100dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10dp"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/disease_water_deficiency" />
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Water deficiency"
+                                        android:textColor="#222222"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/montserrat_bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="Drought stress in plants is characterized by reduced leaf water potential and turgor pre..."
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:fontFamily="@font/montserrat_regular"
+                                        android:maxLines="3"
+                                        android:ellipsize="end" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Item: Fungi -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardSearchFungi"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true"
+                            app:cardBackgroundColor="@android:color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="100dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10dp"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/disease_fungi" />
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Fungi"
+                                        android:textColor="#222222"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/montserrat_bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="Different fungi can attack different plants and plant organs, so fungal infections ca..."
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:fontFamily="@font/montserrat_regular"
+                                        android:maxLines="3"
+                                        android:ellipsize="end" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Item: Animalia -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardSearchAnimalia"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true"
+                            app:cardBackgroundColor="@android:color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="100dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10dp"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/disease_animalia" />
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Animalia"
+                                        android:textColor="#222222"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/montserrat_bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="Plant pests and pathogens interfere with the growth and cause damage to cultivated a..."
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:fontFamily="@font/montserrat_regular"
+                                        android:maxLines="3"
+                                        android:ellipsize="end" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Item: Senescence -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardSearchSenescence"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true"
+                            app:cardBackgroundColor="@android:color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="100dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10dp"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/disease_senescence" />
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Senescence"
+                                        android:textColor="#222222"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/montserrat_bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="While natural leaf senescence is primarily associated with aging, it can also be induced ..."
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:fontFamily="@font/montserrat_regular"
+                                        android:maxLines="3"
+                                        android:ellipsize="end" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Item: Light-related issue -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardSearchLightRelated"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true"
+                            app:cardBackgroundColor="@android:color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="100dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10dp"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/disease_light_related" />
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Light-related issue"
+                                        android:textColor="#222222"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/montserrat_bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="Light intensity influences the manufacture of plant food, stem length, leaf color and flo..."
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:fontFamily="@font/montserrat_regular"
+                                        android:maxLines="3"
+                                        android:ellipsize="end" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Item: Dead plant -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardSearchDeadPlant"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true"
+                            app:cardBackgroundColor="@android:color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="100dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10dp"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/disease_dead_plant" />
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Dead plant"
+                                        android:textColor="#222222"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/montserrat_bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="Plants experiencing disease often exhibit discolored, spotty, or white residue-covered folia..."
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:fontFamily="@font/montserrat_regular"
+                                        android:maxLines="3"
+                                        android:ellipsize="end" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Item: Insecta -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardSearchInsecta"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true"
+                            app:cardBackgroundColor="@android:color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="100dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10dp"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/disease_insecta" />
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Insecta"
+                                        android:textColor="#222222"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/montserrat_bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="Insects may feed on leaves, stems, roots, and flowers of plants. The chewing insects a..."
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:fontFamily="@font/montserrat_regular"
+                                        android:maxLines="3"
+                                        android:ellipsize="end" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Item: Mechanical damage -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardSearchMechanicalDamage"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true"
+                            app:cardBackgroundColor="@android:color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="100dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10dp"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/disease_mechanical_damage" />
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Mechanical damage"
+                                        android:textColor="#222222"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/montserrat_bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="Mechanical injury occurs when plant parts are crushed, cut, punctured, rubbed, or struck ..."
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:fontFamily="@font/montserrat_regular"
+                                        android:maxLines="3"
+                                        android:ellipsize="end" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Item: Feeding damage by insects -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardSearchFeedingDamage"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true"
+                            app:cardBackgroundColor="@android:color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="100dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10dp"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/disease_feeding_damage" />
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Feeding damage by insects"
+                                        android:textColor="#222222"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/montserrat_bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="Insects with sucking mouthparts, such as aphids, scales, leafhoppers, and true b..."
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:fontFamily="@font/montserrat_regular"
+                                        android:maxLines="3"
+                                        android:ellipsize="end" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Item: Light excess -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardSearchLightExcess"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="12dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="2dp"
+                            app:cardUseCompatPadding="true"
+                            app:cardBackgroundColor="@android:color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="100dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="10dp"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/disease_light_excess" />
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="12dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Light excess"
+                                        android:textColor="#222222"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/montserrat_bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="Sunlight is required for photosynthesis, but too much sunlight can damage plants. S..."
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:fontFamily="@font/montserrat_regular"
+                                        android:maxLines="3"
+                                        android:ellipsize="end" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
