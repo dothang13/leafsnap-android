@@ -2,6 +2,7 @@ package fxc.dev.app.ui.main
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -26,13 +27,25 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
             ).show()
         }
 
+    private val takePicturePreviewLauncher =
+        registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap: Bitmap? ->
+            if (bitmap != null) {
+                showToast("Photo captured successfully!")
+                binding.ivDiagnosePlant.setImageBitmap(bitmap)
+            } else {
+                showToast("Photo capture cancelled.")
+            }
+        }
+
     override fun setupViewBinding(inflater: LayoutInflater) = ActivityMainBinding.inflate(inflater)
 
     override fun init(savedInstanceState: Bundle?) {
+        window.setBackgroundDrawableResource(fxc.dev.app.R.drawable.default_background)
         askNotificationPermission()
         setupBottomNavigation()
         setupExploreTabs()
         setupClickListeners()
+        setupDiagnoseTabLogic()
         startPremiumCountdown()
     }
 
@@ -52,26 +65,36 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
             selectNavigationItem(0, menuItems, activeColor, inactiveColor)
             binding.layoutHomeContent.visibility = android.view.View.VISIBLE
             binding.layoutMyPlantsContent.visibility = android.view.View.GONE
+            binding.layoutDiagnoseContent.visibility = android.view.View.GONE
         }
 
         binding.btnMyPlant.setOnClickListener {
             selectNavigationItem(1, menuItems, activeColor, inactiveColor)
             binding.layoutHomeContent.visibility = android.view.View.GONE
             binding.layoutMyPlantsContent.visibility = android.view.View.VISIBLE
+            binding.layoutDiagnoseContent.visibility = android.view.View.GONE
         }
 
         binding.btnDiagnoseTab.setOnClickListener {
             selectNavigationItem(2, menuItems, activeColor, inactiveColor)
-            showToast("Navigation: Diagnose")
+            binding.layoutHomeContent.visibility = android.view.View.GONE
+            binding.layoutMyPlantsContent.visibility = android.view.View.GONE
+            binding.layoutDiagnoseContent.visibility = android.view.View.VISIBLE
+            binding.layoutDiagnoseMain.visibility = android.view.View.VISIBLE
+            binding.layoutDiagnoseSearch.visibility = android.view.View.GONE
+            binding.etSearchDiseases.setText("")
         }
 
         binding.btnMore.setOnClickListener {
             selectNavigationItem(3, menuItems, activeColor, inactiveColor)
+            binding.layoutHomeContent.visibility = android.view.View.GONE
+            binding.layoutMyPlantsContent.visibility = android.view.View.GONE
+            binding.layoutDiagnoseContent.visibility = android.view.View.GONE
             showToast("Navigation: More")
         }
 
         binding.fabCamera.setOnClickListener {
-            showToast("Opening Camera Scanner...")
+            takePicturePreviewLauncher.launch(null)
         }
     }
 
@@ -194,6 +217,58 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun setupDiagnoseTabLogic() {
+        binding.btnViewAllDiseases.setOnClickListener {
+            binding.layoutDiagnoseMain.visibility = android.view.View.GONE
+            binding.layoutDiagnoseSearch.visibility = android.view.View.VISIBLE
+        }
+
+        binding.btnBackFromSearch.setOnClickListener {
+            binding.layoutDiagnoseMain.visibility = android.view.View.VISIBLE
+            binding.layoutDiagnoseSearch.visibility = android.view.View.GONE
+        }
+
+        binding.btnAutoDiagnose.setOnClickListener {
+            takePicturePreviewLauncher.launch(null)
+        }
+
+        binding.btnHelpMain.setOnClickListener {
+            showToast("Opening Diagnose Help...")
+        }
+
+        binding.etSearchDiseases.addTextChangedListener(object : android.text.TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val query = s?.toString()?.lowercase() ?: ""
+                val items = listOf(
+                    Pair(binding.cardSearchAbiotic, "abiotic"),
+                    Pair(binding.cardSearchWaterRelated, "water-related issue"),
+                    Pair(binding.cardSearchNutrientRelated, "nutrient-related issue"),
+                    Pair(binding.cardSearchWaterExcess, "water excess or uneven watering"),
+                    Pair(binding.cardSearchNutrientDeficiency, "nutrient deficiency"),
+                    Pair(binding.cardSearchWaterDeficiency, "water deficiency"),
+                    Pair(binding.cardSearchFungi, "fungi"),
+                    Pair(binding.cardSearchAnimalia, "animalia"),
+                    Pair(binding.cardSearchSenescence, "senescence"),
+                    Pair(binding.cardSearchLightRelated, "light-related issue"),
+                    Pair(binding.cardSearchDeadPlant, "dead plant"),
+                    Pair(binding.cardSearchInsecta, "insecta"),
+                    Pair(binding.cardSearchMechanicalDamage, "mechanical damage"),
+                    Pair(binding.cardSearchFeedingDamage, "feeding damage by insects"),
+                    Pair(binding.cardSearchLightExcess, "light excess")
+                )
+                for ((card, name) in items) {
+                    if (name.contains(query)) {
+                        card.visibility = android.view.View.VISIBLE
+                    } else {
+                        card.visibility = android.view.View.GONE
+                    }
+                }
+            }
+            override fun afterTextChanged(s: android.text.Editable?) {}
+        })
     }
 
     private fun askNotificationPermission() {
