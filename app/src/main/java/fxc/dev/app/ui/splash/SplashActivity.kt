@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import fxc.dev.app.databinding.ActivitySplashBinding
 import fxc.dev.app.ui.base.BaseActivity
 import fxc.dev.app.ui.main.MainActivity
+import fxc.dev.app.ui.subscription.SubscriptionActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.system.exitProcess
@@ -33,7 +34,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashVM>() {
     private fun goToMain() {
         lifecycleScope.launch {
             delay(2000) // Hiển thị Splash Screen trong 2 giây
-            startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+            val intent = Intent(this@SplashActivity, SubscriptionActivity::class.java).apply {
+                putExtra(SubscriptionActivity.EXTRA_FROM_SPLASH, true)
+            }
+            startActivity(intent)
             @Suppress("DEPRECATION")
             overridePendingTransition(android.R.anim.fade_in, 0)
         }

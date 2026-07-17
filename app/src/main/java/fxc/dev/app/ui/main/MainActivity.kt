@@ -2,6 +2,7 @@ package fxc.dev.app.ui.main
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
@@ -14,6 +15,9 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import fxc.dev.app.databinding.ActivityMainBinding
 import fxc.dev.app.ui.base.BaseActivity
+import fxc.dev.app.ui.subscription.SubscriptionActivity
+import fxc.dev.common.Fox
+import fxc.dev.common.premium
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
     override val viewModel: MainVM by viewModels()
@@ -156,17 +160,35 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
         }
     }
 
+    private fun checkPremiumAndRun(action: () -> Unit) {
+        if (Fox.premium.isSubscribed()) {
+            action()
+        } else {
+            startActivity(Intent(this, SubscriptionActivity::class.java))
+        }
+    }
+
     // Click Listeners for Mock interactions
     private fun setupClickListeners() {
         binding.btnProfileDropdown.setOnClickListener { showToast("Opening profile details...") }
         binding.cardStats.setOnClickListener { showToast("Opening plant statistics...") }
         
-        binding.actionCalendar.setOnClickListener { showToast("Opening Calendar...") }
-        binding.actionDiagnose.setOnClickListener { showToast("Opening Diagnose Camera...") }
-        binding.actionTasks.setOnClickListener { showToast("Opening Tasks Manager...") }
-        binding.actionIdentify.setOnClickListener { showToast("Opening Leaf Identifier...") }
+        binding.actionCalendar.setOnClickListener {
+            checkPremiumAndRun { showToast("Opening Calendar...") }
+        }
+        binding.actionDiagnose.setOnClickListener {
+            checkPremiumAndRun { showToast("Opening Diagnose Camera...") }
+        }
+        binding.actionTasks.setOnClickListener {
+            checkPremiumAndRun { showToast("Opening Tasks Manager...") }
+        }
+        binding.actionIdentify.setOnClickListener {
+            checkPremiumAndRun { showToast("Opening Leaf Identifier...") }
+        }
 
-        binding.cardPremium.setOnClickListener { showToast("Redirecting to Premium Billing...") }
+        binding.cardPremium.setOnClickListener {
+            startActivity(Intent(this, SubscriptionActivity::class.java))
+        }
         binding.cardSearch.setOnClickListener { showToast("Opening Search bar...") }
 
         binding.catFlowers.setOnClickListener { showToast("Category: Flowers") }
@@ -231,7 +253,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
         }
 
         binding.btnAutoDiagnose.setOnClickListener {
-            takePicturePreviewLauncher.launch(null)
+            checkPremiumAndRun {
+                takePicturePreviewLauncher.launch(null)
+            }
         }
 
         binding.btnHelpMain.setOnClickListener {

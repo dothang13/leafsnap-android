@@ -4,126 +4,491 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_subscription_window"
     tools:context=".ui.subscription.SubscriptionActivity">
+
+    <!-- Close Button -->
+    <ImageView
+        android:id="@+id/ivClose"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:padding="4dp"
+        android:src="@drawable/ic_cancel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="#888888"
+        tools:ignore="ContentDescription" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivClose">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:paddingHorizontal="24dp"
+            android:paddingBottom="24dp">
 
-            <ImageView
-                android:id="@+id/ivClose"
+            <!-- Decorative Ratings Wreath Badge -->
+            <LinearLayout
+                android:id="@+id/layoutWreathBadge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="12dp"
-                android:layout_marginTop="42dp"
-                android:layout_marginBottom="12dp"
-                android:src="@drawable/ic_cancel"
-                tools:ignore="ContentDescription" />
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_green_gradient_pill"
+                android:backgroundTint="#FFFFFF"
+                android:elevation="4dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_logo_wreath"
+                    tools:ignore="ContentDescription" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="★★★★★"
+                        android:textColor="#FFB703"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10M+ Users' Choice"
+                        android:textColor="#333333"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/montserrat_bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/tvTitleUpgrade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Upgrade to"
+                android:textColor="#333333"
+                android:textSize="22sp"
+                android:fontFamily="@font/montserrat_bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutWreathBadge" />
 
             <TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="match_parent"
+                android:id="@+id/tvTitlePro"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:text="@string/unlimited_access_to_all_feature"
-                android:textColor="@android:color/black"
-                android:textSize="34sp"
-                android:textStyle="bold" />
+                android:text="LeafSnap Pro"
+                android:textColor="#307B54"
+                android:textSize="32sp"
+                android:fontFamily="@font/montserrat_bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTitleUpgrade" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvProducts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:minHeight="300dp"
-                android:nestedScrollingEnabled="false"
-                android:orientation="vertical"
-                android:overScrollMode="never"
-                android:paddingHorizontal="16dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:itemCount="4"
-                tools:listitem="@layout/item_purchase_new" />
-
+            <!-- Features List -->
             <LinearLayout
-                android:id="@+id/layoutLoading"
+                android:id="@+id/layoutFeatures"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginHorizontal="8dp"
                 android:orientation="vertical"
-                android:visibility="gone"
-                tools:visibility="visible">
+                app:layout_constraintTop_toBottomOf="@id/tvTitlePro">
 
-                <ProgressBar
+                <!-- Feature 1 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_check_green"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="Diagnose plant issues and revive them"
+                        android:textColor="#666666"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/montserrat_medium" />
+                </LinearLayout>
+
+                <!-- Feature 2 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_check_green"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="Learn in-depth plant care guides"
+                        android:textColor="#666666"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/montserrat_medium" />
+                </LinearLayout>
+
+                <!-- Feature 3 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_check_green"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="Track unlimited care schedules"
+                        android:textColor="#666666"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/montserrat_medium" />
+                </LinearLayout>
+
+                <!-- Feature 4 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_check_green"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="Identify plants anytime, no limits"
+                        android:textColor="#666666"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/montserrat_medium" />
+                </LinearLayout>
+
+                <!-- Feature 5 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_check_green"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="Enjoy ad-free experience"
+                        android:textColor="#666666"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/montserrat_medium" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Annual Subscription Card -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardAnnual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginHorizontal="4dp"
+                android:background="@drawable/bg_subscription_card_selected"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="16dp"
+                app:layout_constraintTop_toBottomOf="@id/layoutFeatures">
+
+                <ImageView
+                    android:id="@+id/ivRadioAnnual"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_circle_checked"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/tvTitleAnnual"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="Subscribe Annually"
+                    android:textColor="#222222"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/montserrat_bold"
+                    app:layout_constraintStart_toEndOf="@id/ivRadioAnnual"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvPriceAnnual"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="Just 1.199.000đ/year"
+                    android:textColor="#666666"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/montserrat_medium"
+                    app:layout_constraintStart_toStartOf="@id/tvTitleAnnual"
+                    app:layout_constraintTop_toBottomOf="@id/tvTitleAnnual" />
+
+                <TextView
+                    android:id="@+id/tvPriceWeeklyAnnually"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="đ23,057.69"
+                    android:textColor="#222222"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/montserrat_bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvPerWeekAnnually"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="per week"
+                    android:textColor="#888888"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/montserrat_medium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPriceWeeklyAnnually" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Most Popular Badge overlapping Annual Card -->
+            <TextView
+                android:id="@+id/badgeMostPopular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_btn_subscription"
+                android:backgroundTint="#000000"
+                android:elevation="6dp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="4dp"
+                android:text="Most Popular 🔥"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp"
+                android:fontFamily="@font/montserrat_bold"
+                app:layout_constraintBottom_toTopOf="@id/cardAnnual"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/cardAnnual" />
+
+            <!-- Weekly Subscription Card -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardWeekly"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="4dp"
+                android:background="@drawable/bg_subscription_card_unselected"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="16dp"
+                app:layout_constraintTop_toBottomOf="@id/cardAnnual">
+
+                <ImageView
+                    android:id="@+id/ivRadioWeekly"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_circle_outline"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/tvTitleWeekly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="Subscribe Weekly"
+                    android:textColor="#222222"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/montserrat_bold"
+                    app:layout_constraintStart_toEndOf="@id/ivRadioWeekly"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvPriceWeekly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="đ199,000.00"
+                    android:textColor="#222222"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/montserrat_bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvPerWeekWeekly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="per week"
+                    android:textColor="#888888"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/montserrat_medium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPriceWeekly" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Helper Trial Text -->
+            <TextView
+                android:id="@+id/tvTrialHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="3-days FREE trial then 199.000đ/week"
+                android:textColor="#666666"
+                android:textSize="12sp"
+                android:fontFamily="@font/montserrat_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardWeekly" />
+
+            <!-- Continue Button -->
+            <Button
+                android:id="@+id/btnStartSubscription"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="4dp"
+                android:background="@drawable/bg_btn_subscription"
+                android:text="Start My Subscription"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:fontFamily="@font/montserrat_bold"
+                app:backgroundTint="@null"
+                app:layout_constraintTop_toBottomOf="@id/tvTrialHint" />
+
+            <!-- Footer cancel Hint -->
+            <TextView
+                android:id="@+id/tvCancelHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Cancel anytime, no commitments"
+                android:textColor="#888888"
+                android:textSize="12sp"
+                android:fontFamily="@font/montserrat_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnStartSubscription" />
+
+            <!-- Legal Footer links -->
+            <LinearLayout
+                android:id="@+id/layoutLegal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvCancelHint">
+
+                <TextView
+                    android:id="@+id/tvPrivacyPolicy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:text="Privacy Policy"
+                    android:textColor="#888888"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/montserrat_medium" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/loading_products"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/btnContinue"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginBottom="24dp"
-                android:text="@string/continue_str"
-                android:textAllCaps="false"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:backgroundTint="@null" />
-
-            <LinearLayout
-                android:id="@+id/lnTermAndPolicy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical">
+                    android:padding="4dp"
+                    android:text="|"
+                    android:textColor="#888888"
+                    android:textSize="11sp" />
 
                 <TextView
                     android:id="@+id/tvTermsOfUse"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/term_of_use"
-                    android:textColor="@android:color/black" />
+                    android:padding="4dp"
+                    android:text="Term Of Use"
+                    android:textColor="#888888"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/montserrat_medium" />
 
                 <TextView
-                    android:id="@+id/tvPrivacy"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="@string/privacy_policy"
-                    android:textColor="@android:color/black" />
+                    android:padding="4dp"
+                    android:text="|"
+                    android:textColor="#888888"
+                    android:textSize="11sp" />
 
+                <TextView
+                    android:id="@+id/tvRestore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:text="Restore"
+                    android:textColor="#888888"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/montserrat_medium" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvPolicy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:paddingBottom="6dp"
-                android:text="@string/policy_text"
-                android:textColor="@android:color/black" />
-
-        </LinearLayout>
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

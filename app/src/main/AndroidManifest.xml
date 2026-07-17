@@ -40,6 +40,12 @@
             android:theme="@style/MainTheme"
             tools:ignore="LockedOrientationActivity" />
 
+        <activity
+            android:name=".ui.subscription.SubscriptionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
         <service
             android:name=".service.AppFirebaseMessagingService"
             android:exported="false">
