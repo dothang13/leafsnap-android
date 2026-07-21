@@ -278,7 +278,7 @@ class BillingManager private constructor(
         )
     }
 
-    private suspend fun queryPurchases() {
+    override suspend fun queryPurchases() {
         val purchasesResult = mutableSetOf<Purchase>()
 
         val inAppResult = mBillingClient.queryPurchasesAsync(

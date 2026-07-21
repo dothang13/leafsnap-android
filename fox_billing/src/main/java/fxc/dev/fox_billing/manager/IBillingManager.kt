@@ -22,6 +22,8 @@ abstract class IBillingManager internal constructor() {
 
     abstract fun getPricedProducts(): List<IAPProduct>
 
+    abstract suspend fun queryPurchases()
+
     fun addBillingClientListener(billingClientListener: BillingClientListener) {
         billingClientListeners.add(billingClientListener)
     }
