@@ -106,6 +106,13 @@ fun IAPProduct.priceCurrencyCode(): String? = if (productType == IAPProductType.
     productDetails?.biggestSubscriptionOfferDetailsToken()?.biggestPrice()?.priceCurrencyCode
 }
 
+fun IAPProduct.formattedPrice(): String? = if (productType == IAPProductType.InApp) {
+    productDetails?.oneTimePurchaseOfferDetails?.formattedPrice
+} else {
+    productDetails?.biggestSubscriptionOfferDetailsToken()?.biggestPrice()?.formattedPrice
+}
+
+
 fun IAPProduct.periods(): IAPProductPeriods? = if (productType == IAPProductType.Subscription) {
     productDetails
         ?.biggestSubscriptionOfferDetailsToken()

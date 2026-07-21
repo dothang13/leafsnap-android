@@ -2,6 +2,7 @@ package fxc.dev.app.ui.main
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
@@ -12,8 +13,19 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import fxc.dev.app.databinding.ActivityMainBinding
 import fxc.dev.app.ui.base.BaseActivity
+import fxc.dev.app.ui.subscription.SubscriptionActivity
+import fxc.dev.app.ui.calendar.CalendarActivity
+import fxc.dev.app.ui.settings.SettingsActivity
+import fxc.dev.common.Fox
+import fxc.dev.common.premium
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
     override val viewModel: MainVM by viewModels()
@@ -47,6 +59,18 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
         setupClickListeners()
         setupDiagnoseTabLogic()
         startPremiumCountdown()
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.hasPurchased.collectLatest { isSubscribed ->
+                    binding.cardPremium.isVisible = !isSubscribed
+                    binding.cardMorePremium.isVisible = !isSubscribed
+                }
+            }
+        }
     }
 
     // Bottom Navigation Logic
@@ -66,6 +90,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
             binding.layoutHomeContent.visibility = android.view.View.VISIBLE
             binding.layoutMyPlantsContent.visibility = android.view.View.GONE
             binding.layoutDiagnoseContent.visibility = android.view.View.GONE
+            binding.layoutMoreContent.visibility = android.view.View.GONE
         }
 
         binding.btnMyPlant.setOnClickListener {
@@ -73,6 +98,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
             binding.layoutHomeContent.visibility = android.view.View.GONE
             binding.layoutMyPlantsContent.visibility = android.view.View.VISIBLE
             binding.layoutDiagnoseContent.visibility = android.view.View.GONE
+            binding.layoutMoreContent.visibility = android.view.View.GONE
         }
 
         binding.btnDiagnoseTab.setOnClickListener {
@@ -80,6 +106,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
             binding.layoutHomeContent.visibility = android.view.View.GONE
             binding.layoutMyPlantsContent.visibility = android.view.View.GONE
             binding.layoutDiagnoseContent.visibility = android.view.View.VISIBLE
+            binding.layoutMoreContent.visibility = android.view.View.GONE
             binding.layoutDiagnoseMain.visibility = android.view.View.VISIBLE
             binding.layoutDiagnoseSearch.visibility = android.view.View.GONE
             binding.etSearchDiseases.setText("")
@@ -90,7 +117,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
             binding.layoutHomeContent.visibility = android.view.View.GONE
             binding.layoutMyPlantsContent.visibility = android.view.View.GONE
             binding.layoutDiagnoseContent.visibility = android.view.View.GONE
-            showToast("Navigation: More")
+            binding.layoutMoreContent.visibility = android.view.View.VISIBLE
         }
 
         binding.fabCamera.setOnClickListener {
@@ -156,28 +183,58 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
         }
     }
 
+    private fun checkPremiumAndRun(action: () -> Unit) {
+        if (Fox.premium.isSubscribed()) {
+            action()
+        } else {
+            startActivity(Intent(this, SubscriptionActivity::class.java))
+        }
+    }
+
     // Click Listeners for Mock interactions
     private fun setupClickListeners() {
         binding.btnProfileDropdown.setOnClickListener { showToast("Opening profile details...") }
         binding.cardStats.setOnClickListener { showToast("Opening plant statistics...") }
         
-        binding.actionCalendar.setOnClickListener { showToast("Opening Calendar...") }
-        binding.actionDiagnose.setOnClickListener { showToast("Opening Diagnose Camera...") }
-        binding.actionTasks.setOnClickListener { showToast("Opening Tasks Manager...") }
-        binding.actionIdentify.setOnClickListener { showToast("Opening Leaf Identifier...") }
+        binding.actionCalendar.setOnClickListener {
+            checkPremiumAndRun {
+                startActivity(Intent(this, CalendarActivity::class.java))
+            }
+        }
+        binding.actionDiagnose.setOnClickListener {
+            checkPremiumAndRun { showToast("Opening Diagnose Camera...") }
+        }
+        binding.actionTasks.setOnClickListener {
+            checkPremiumAndRun { showToast("Opening Tasks Manager...") }
+        }
+        binding.actionIdentify.setOnClickListener {
+            checkPremiumAndRun { showToast("Opening Leaf Identifier...") }
+        }
 
-        binding.cardPremium.setOnClickListener { showToast("Redirecting to Premium Billing...") }
+        binding.cardPremium.setOnClickListener {
+            startActivity(Intent(this, SubscriptionActivity::class.java))
+        }
         binding.cardSearch.setOnClickListener { showToast("Opening Search bar...") }
 
         binding.catFlowers.setOnClickListener { showToast("Category: Flowers") }
         binding.catVegetables.setOnClickListener { showToast("Category: Vegetables") }
         binding.catCacti.setOnClickListener { showToast("Category: Cacti & Succulents") }
         binding.catTree.setOnClickListener { showToast("Category: Tree") }
+        binding.catVines.setOnClickListener { showToast("Category: Vines") }
+        binding.catHerbs.setOnClickListener { showToast("Category: Herbs") }
+        binding.catShrubs.setOnClickListener { showToast("Category: Shrubs") }
+        binding.catFoliage.setOnClickListener { showToast("Category: Foliage") }
+        binding.catAirCleaner.setOnClickListener { showToast("Category: Air Cleaner") }
+        binding.catEasyCare.setOnClickListener { showToast("Category: Easy Care") }
 
         binding.cardGettingStarted.setOnClickListener { showToast("Opening Getting Started tutorial...") }
         
-        binding.toolWaterCalculator.setOnClickListener { showToast("Opening Water Calculator...") }
-        binding.toolSmartFinder.setOnClickListener { showToast("Opening Smart Finder...") }
+        binding.toolWaterCalculator.setOnClickListener {
+            checkPremiumAndRun { showToast("Opening Water Calculator...") }
+        }
+        binding.toolSmartFinder.setOnClickListener {
+            checkPremiumAndRun { showToast("Opening Smart Finder...") }
+        }
         
         binding.btnExploreMore.setOnClickListener { showToast("Exploring more articles...") }
 
@@ -188,6 +245,20 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
         binding.btnCloudSync.setOnClickListener { showToast("Syncing with cloud...") }
         binding.btnCreateCollection.setOnClickListener { showToast("Creating new collection...") }
         binding.btnAddPlant.setOnClickListener { showToast("Adding new plant...") }
+
+        // More screen listeners
+        binding.btnMoreSettings.setOnClickListener { startActivity(Intent(this, SettingsActivity::class.java)) }
+        binding.btnEditProfile.setOnClickListener { startActivity(Intent(this, SettingsActivity::class.java)) }
+        binding.btnMoreGoPremium.setOnClickListener { startActivity(Intent(this, SubscriptionActivity::class.java)) }
+        binding.cardIdentificationHistory.setOnClickListener { showToast("Opening Identification History...") }
+        
+        binding.toolMoreDiagnose.setOnClickListener { checkPremiumAndRun { showToast("Opening Diagnose Camera...") } }
+        binding.toolMoreMushroomId.setOnClickListener { checkPremiumAndRun { showToast("Opening Mushroom Identifier...") } }
+        binding.toolMoreProId.setOnClickListener { checkPremiumAndRun { showToast("Opening Pro Identifier...") } }
+        binding.toolMoreInsectsId.setOnClickListener { checkPremiumAndRun { showToast("Opening Insects Identifier...") } }
+        binding.toolMoreToxicityId.setOnClickListener { checkPremiumAndRun { showToast("Opening Toxicity Identifier...") } }
+        binding.toolMoreWaterCalculator.setOnClickListener { checkPremiumAndRun { showToast("Opening Water Calculator...") } }
+        binding.cardMoreSmartFinder.setOnClickListener { checkPremiumAndRun { showToast("Opening Smart Finder...") } }
     }
 
     // Timer countdown logic
@@ -231,7 +302,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
         }
 
         binding.btnAutoDiagnose.setOnClickListener {
-            takePicturePreviewLauncher.launch(null)
+            startActivity(Intent(this, SubscriptionActivity::class.java))
         }
 
         binding.btnHelpMain.setOnClickListener {

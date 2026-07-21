@@ -7,6 +7,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.messaging.messaging
 import dagger.hilt.android.HiltAndroidApp
 import fxc.dev.app.ui.splash.SplashActivity
+import fxc.dev.app.ui.subscription.SubscriptionActivity
 import fxc.dev.app.utils.AdjustTokenConstants
 import fxc.dev.app.utils.AdsConstants
 import fxc.dev.app.utils.AppKonfig
@@ -80,7 +81,8 @@ class MainApplication : Application() {
         Fox.ads.configure(
             adsConstants = AdsConstants,
             disableAppOpenAdActivities = listOf(
-                SplashActivity::class.java
+                SplashActivity::class.java,
+                SubscriptionActivity::class.java
             )
         )
     }
