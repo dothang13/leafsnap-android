@@ -22,6 +22,9 @@ import fxc.dev.app.ui.base.BaseActivity
 import fxc.dev.app.ui.subscription.SubscriptionActivity
 import fxc.dev.app.ui.calendar.CalendarActivity
 import fxc.dev.app.ui.settings.SettingsActivity
+import fxc.dev.app.ui.identify.IdentifyActivity
+import fxc.dev.app.ui.tasks.TasksActivity
+import fxc.dev.app.ui.category.CategoryActivity
 import fxc.dev.common.Fox
 import fxc.dev.common.premium
 import kotlinx.coroutines.flow.collectLatest
@@ -121,7 +124,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
         }
 
         binding.fabCamera.setOnClickListener {
-            takePicturePreviewLauncher.launch(null)
+            startActivity(Intent(this, IdentifyActivity::class.java))
         }
     }
 
@@ -197,18 +200,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
         binding.cardStats.setOnClickListener { showToast("Opening plant statistics...") }
         
         binding.actionCalendar.setOnClickListener {
-            checkPremiumAndRun {
-                startActivity(Intent(this, CalendarActivity::class.java))
-            }
+            startActivity(Intent(this, CalendarActivity::class.java))
         }
         binding.actionDiagnose.setOnClickListener {
-            checkPremiumAndRun { showToast("Opening Diagnose Camera...") }
+            checkPremiumAndRun { startActivity(Intent(this, IdentifyActivity::class.java)) }
         }
         binding.actionTasks.setOnClickListener {
-            checkPremiumAndRun { showToast("Opening Tasks Manager...") }
+            startActivity(Intent(this, TasksActivity::class.java))
         }
         binding.actionIdentify.setOnClickListener {
-            checkPremiumAndRun { showToast("Opening Leaf Identifier...") }
+            startActivity(Intent(this, IdentifyActivity::class.java))
         }
 
         binding.cardPremium.setOnClickListener {
@@ -216,16 +217,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
         }
         binding.cardSearch.setOnClickListener { showToast("Opening Search bar...") }
 
-        binding.catFlowers.setOnClickListener { showToast("Category: Flowers") }
-        binding.catVegetables.setOnClickListener { showToast("Category: Vegetables") }
-        binding.catCacti.setOnClickListener { showToast("Category: Cacti & Succulents") }
-        binding.catTree.setOnClickListener { showToast("Category: Tree") }
-        binding.catVines.setOnClickListener { showToast("Category: Vines") }
-        binding.catHerbs.setOnClickListener { showToast("Category: Herbs") }
-        binding.catShrubs.setOnClickListener { showToast("Category: Shrubs") }
-        binding.catFoliage.setOnClickListener { showToast("Category: Foliage") }
-        binding.catAirCleaner.setOnClickListener { showToast("Category: Air Cleaner") }
-        binding.catEasyCare.setOnClickListener { showToast("Category: Easy Care") }
+        binding.catFlowers.setOnClickListener { openCategory("flowers", "Flowers") }
+        binding.catVegetables.setOnClickListener { openCategory("vegetables", "Vegetables") }
+        binding.catCacti.setOnClickListener { openCategory("cacti", "Cacti & Succulents") }
+        binding.catTree.setOnClickListener { openCategory("tree", "Tree") }
+        binding.catVines.setOnClickListener { openCategory("vines", "Vines") }
+        binding.catHerbs.setOnClickListener { openCategory("herbs", "Herbs") }
+        binding.catShrubs.setOnClickListener { openCategory("shrubs", "Shrubs") }
+        binding.catFoliage.setOnClickListener { openCategory("foliage", "Foliage") }
+        binding.catAirCleaner.setOnClickListener { openCategory("air_cleaner", "Air Cleaner") }
+        binding.catEasyCare.setOnClickListener { openCategory("easy_care", "Easy Care") }
 
         binding.cardGettingStarted.setOnClickListener { showToast("Opening Getting Started tutorial...") }
         
@@ -252,9 +253,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
         binding.btnMoreGoPremium.setOnClickListener { startActivity(Intent(this, SubscriptionActivity::class.java)) }
         binding.cardIdentificationHistory.setOnClickListener { showToast("Opening Identification History...") }
         
-        binding.toolMoreDiagnose.setOnClickListener { checkPremiumAndRun { showToast("Opening Diagnose Camera...") } }
+        binding.toolMoreDiagnose.setOnClickListener { checkPremiumAndRun { startActivity(Intent(this, IdentifyActivity::class.java)) } }
         binding.toolMoreMushroomId.setOnClickListener { checkPremiumAndRun { showToast("Opening Mushroom Identifier...") } }
-        binding.toolMoreProId.setOnClickListener { checkPremiumAndRun { showToast("Opening Pro Identifier...") } }
+        binding.toolMoreProId.setOnClickListener { checkPremiumAndRun { startActivity(Intent(this, IdentifyActivity::class.java)) } }
         binding.toolMoreInsectsId.setOnClickListener { checkPremiumAndRun { showToast("Opening Insects Identifier...") } }
         binding.toolMoreToxicityId.setOnClickListener { checkPremiumAndRun { showToast("Opening Toxicity Identifier...") } }
         binding.toolMoreWaterCalculator.setOnClickListener { checkPremiumAndRun { showToast("Opening Water Calculator...") } }
@@ -359,5 +360,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainVM>() {
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         }
+    }
+
+    private fun openCategory(key: String, title: String) {
+        val intent = Intent(this, CategoryActivity::class.java).apply {
+            putExtra(CategoryActivity.EXTRA_CATEGORY_KEY, key)
+            putExtra(CategoryActivity.EXTRA_CATEGORY_TITLE, title)
+        }
+        startActivity(intent)
     }
 }
